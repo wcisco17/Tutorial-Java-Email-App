@@ -8,9 +8,11 @@ public class Email {
         private String department;
         private int mailboxCapacity = 500;
         private String alternateEmail;
-        private String companySufix = "company.com";
+        private String companySufix;
 
         private int passwordLength =10;
+
+        public boolean bool = false;
 
 
         // Constructor to receive first and last name.
@@ -18,6 +20,8 @@ public class Email {
                 this.firstName = firstName;
                 this.lastName = lastName;
                
+                // Call for company name
+                this.companySufix = setCompanyName();
 
                 // Call a method asking for the deparment - return department
                 this.department = setDepartment();
@@ -28,14 +32,40 @@ public class Email {
                 System.out.println("Your password is: " + this.password);
 
                 // Generate Email
-                email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + companySufix;
+                email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + "-" + companySufix;
             }
+        
+         public String setCompanyName() {
+            String setCompanyName;
+            Scanner in = new Scanner(System.in);
+            
+
+            System.out.println("Enter company name: ");
+
+            bool = false;
+
+            do {
+
+                while(!in.hasNextLine()) {
+                    System.out.println("Not the right value..");
+                    in.next();
+                }
+                bool = true;
+                setCompanyName = in.nextLine();
+                
+            } while (!bool);
+
+
+            return setCompanyName + ".com";
+         }
 
         // As for a department
         private String setDepartment() {
             int depChoice;
-            System.out.println("Enter the deparment: \n1 for Sales\n2 for Development\n3 for Accounting\0 for none");
             Scanner in = new Scanner(System.in);
+
+            System.out.println("Enter the deparment: \n1 for Sales\n2 for Development\n3 for Accounting\0 for none");
+
             do {
                 while(!in.hasNextInt()) {
                     System.out.println("Not the right value..");
@@ -43,9 +73,11 @@ public class Email {
                 }
                 
                depChoice = in.nextInt();
-
-               
             } while(!(depChoice == 1) && !(depChoice == 2) && !(depChoice == 3));
+
+
+
+
                    switch (depChoice) {
                        case 1:
                            return "Sales";
@@ -57,6 +89,7 @@ public class Email {
                            return "";
                            
                    }
+       
         }
 
         //  Generate random password
